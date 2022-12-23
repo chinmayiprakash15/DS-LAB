@@ -1,0 +1,62 @@
+//evaluation of postfix expression
+#include<stdio.h>
+#include<ctype.h>
+int stack[20];  //Global variable declaration
+int top=-1;     //initialization of top
+void push(int x)    //Push function
+{
+    stack[++top]=x;
+}
+int pop()   //Pop function
+{
+    return stack[top--];
+}
+int main()  Main function
+{
+    char exp[20];
+    char *e;
+    int n1,n2,n3,num;
+    printf("Enter the expression:");    //input of expression
+    scanf("%s", exp);
+    e=exp;
+    while(*e!='\0')     //Check condition
+     {
+       if(isdigit(*e))
+        {
+          num=*e-48;
+          push(num);
+        }
+       else
+        {
+          n1=pop();
+          n2=pop();
+          switch(*e)    //switch case
+           {
+             case'+':   //Addition operation
+              {
+                n3=n1+n2;
+                break;
+              }
+             case'-':   //Subtraction operation
+              {
+                n3=n2-n1;
+                break;
+              }
+             case'*':   //Multiplication operation
+              {
+                n3=n1*n2;
+                break;
+              }
+             case'/':   //Division operation
+              {
+                n3=n2/n1;
+                break;
+              }
+           }
+          push(n3);
+         }
+        e++;
+      }
+    printf("\n The result of expression %s = %d\n", exp, pop());
+    return 0;
+}
